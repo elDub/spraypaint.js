@@ -52,7 +52,7 @@ const expectedCreatePayload: JsonapiResponseDoc = {
       },
       genre: {
         data: {
-          ["temp-id"]: "abc2",
+          ["temp-id"]: "abc3",
           type: "genres",
           method: "create"
         }
@@ -60,7 +60,7 @@ const expectedCreatePayload: JsonapiResponseDoc = {
       special_books: {
         data: [
           {
-            ["temp-id"]: "abc3",
+            ["temp-id"]: "abc4",
             type: "books",
             method: "create"
           }
@@ -78,7 +78,7 @@ const expectedCreatePayload: JsonapiResponseDoc = {
       relationships: {
         genre: {
           data: {
-            ["temp-id"]: "abc2",
+            ["temp-id"]: "abc3",
             type: "genres",
             method: "create"
           }
@@ -86,14 +86,14 @@ const expectedCreatePayload: JsonapiResponseDoc = {
       }
     },
     {
-      ["temp-id"]: "abc2",
+      ["temp-id"]: "abc3",
       type: "genres",
       attributes: {
         name: "Horror"
       }
     },
     {
-      ["temp-id"]: "abc3",
+      ["temp-id"]: "abc4",
       type: "books",
       attributes: {
         title: "The Stand"
@@ -250,7 +250,9 @@ describe("nested persistence", () => {
     // todo remove #destroy? and just save when markwithpersisted? combo? for ombined payload
     // todo test unique includes/circular relationshio
     it("sends the correct payload", async () => {
-      await instance.save({ with: { books: "genre", genre: {}, specialBooks: {} } })
+      await instance.save({
+        with: { books: "genre", genre: {}, specialBooks: {} }
+      })
 
       expect(payloads[0]).to.deep.equal(expectedCreatePayload)
     })
