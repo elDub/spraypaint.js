@@ -1027,6 +1027,7 @@ describe("Model", () => {
         it("is dirty", () => {
           instance = new Author()
           const genre = new Genre({ id: 1 })
+          genre.authors = [instance]
           genre.isPersisted = true
           const otherGenre = new Genre({ id: 2 })
           otherGenre.isPersisted = true
@@ -1035,6 +1036,9 @@ describe("Model", () => {
           instance.isPersisted = true
 
           expect(instance.isDirty()).to.eq(false)
+          expect(instance.isDirty("genre")).to.eq(false)
+          expect(instance.isDirty({ genre: "authors" })).to.eq(false)
+
           instance.genre = otherGenre
           expect(instance.isDirty("genre")).to.eq(true)
           expect(instance.isDirty()).to.eq(false)
